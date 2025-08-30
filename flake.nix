@@ -79,6 +79,8 @@
             prev = prev.pyudev;
           };
 
+          propagatedBuildInputs = (prev.propagatedBuildInputs or [ ]) ++ [ pkgs.python312Packages.pyudev ];
+
           passthru = old.passthru // {
             # Put all tests in the passthru.tests attribute set.
             # Nixpkgs also uses the passthru.tests mechanism for ofborg test discovery.
