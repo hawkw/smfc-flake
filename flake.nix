@@ -347,17 +347,17 @@
                   script =
                     let
                       logLevels = {
-                        none = 0;
-                        error = 1;
-                        config = 2;
-                        info = 3;
-                        debug = 4;
+                        none = "0";
+                        error = "1";
+                        config = "2";
+                        info = "3";
+                        debug = "4";
                       };
                       logLevel = attrsets.getAttr cfg.logLevel logLevels;
                       logOutputs = {
-                        stdout = 0;
-                        stderr = 1;
-                        syslog = 2;
+                        stdout = "0";
+                        stderr = "1";
+                        syslog = "2";
                       };
                       logOutput = attrsets.getAttr cfg.logOutput logOutputs;
                     in
