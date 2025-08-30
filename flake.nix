@@ -211,7 +211,7 @@
                     description = "Enable fan speed control for this zone";
                   };
                   ipmi_zone = mkOption {
-                    type = types.listOf type.int.positive;
+                    type = types.listOf types.int.positive;
                     description = "List of IPMI fan zones to control";
                   };
                   temp_calc = mkOption
