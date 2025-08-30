@@ -354,8 +354,10 @@
                         command = "${pkgs.ipmitool}/bin/ipmitool";
                       };
                     "CPU zone" = cfg.zones.cpu;
-                    "HD zone" = cfg.zones.hd;
-                    "GPU zone" = cfg.zones.gpu;
+                    "HD zone" = cfg.zones.hd // {
+                      smartctl_path = "${pkgs.smartmontools}/bin/smartctl" };
+                    }
+                      "GPU zone" = cfg.zones.gpu;
                   };
               systemd.services.sfmcd =
                 {
