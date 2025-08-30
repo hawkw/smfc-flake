@@ -72,10 +72,13 @@
       # An overlay of build fixups & test additions.m
       pyprojectOverrides = final: prev: {
         smfc = prev.smfc.overrideAttrs (old: {
-          # Add runtime dependencies that need to be available
-          buildInputs = (old.buildInputs or [ ]) ++ [
-            pkgs.systemd # provides libudev
-          ];
+          pyudev = prev.pyudev.overrideAttrs (old: {
+            postPatch = (old.postPatch or "") + ''
+              substituteInPlace pyudev/_libudev.py \
+                --replace "find_library('udev')" "'${pkgs.systemd.lib}/lib/libudev.so.1'"
+            '';
+          });
+
           passthru = old.passthru // {
             # Put all tests in the passthru.tests attribute set.
             # Nixpkgs also uses the passthru.tests mechanism for ofborg test discovery.
