@@ -268,7 +268,9 @@
               in
               {
                 cpu = mkOption {
-                  type = types.submodule zoneOptions;
+                  type = types.submodule {
+                    options = zoneOptions;
+                  };
                   description = "Configuration for the CPU fan zone";
                   default = {
                     enabled = true;
@@ -284,7 +286,9 @@
                 };
                 hd =
                   mkOption {
-                    type = types.submodule (zoneOptions // hdZoneOptions);
+                    type = types.submodule {
+                      options = (zoneOptions // hdZoneOptions);
+                    };
                     description = "Configuration for the HD fan zone";
                     default = {
                       enabled = cfg.smartmontools.enable;
@@ -300,15 +304,16 @@
                   };
                 gpu = mkOption
                   {
-                    type = types.submodule
-                      (zoneOptions // {
+                    type = types.submodule {
+                      options = zoneOptions // {
                         gpu_device_ids = mkOption
                           {
                             type = types.listOf types.int.positive;
                             description = "GPU device IDs. These are indices in nvidia-smi temperature report.";
                             default = [ 0 ];
                           };
-                      });
+                      };
+                    };
                     description = "Configuration for GPU zone";
                     default = {
                       enabled = cfg.nvidia-smi.enable;
