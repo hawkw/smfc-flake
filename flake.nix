@@ -319,6 +319,15 @@
                     description = "Configuration for GPU zone";
                     default = {
                       enabled = cfg.nvidia-smi.enable;
+                      ipmi_zone = [ 1 ];
+                      temp_calc = 1;
+                      steps = 5;
+                      polling = 2;
+                      sensitivity = 2.0;
+                      min_temp = 40.0;
+                      max_temp = 70.0;
+                      min_level = 35;
+                      max_level = 100;
                     };
 
                   };
