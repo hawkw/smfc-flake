@@ -354,7 +354,7 @@
                         command = "${pkgs.ipmitool}/bin/ipmitool";
                       };
                     "CPU zone" = cfg.zones.cpu;
-                    "HDD zone" = cfg.zones.hd;
+                    "HD zone" = cfg.zones.hd;
                     "GPU zone" = cfg.zones.gpu;
                   };
               systemd.services.sfmcd =
