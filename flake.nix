@@ -76,18 +76,6 @@
           buildInputs = (old.buildInputs or [ ]) ++ [
             pkgs.systemd # provides libudev
           ];
-
-          # If the Python package needs to find libudev at runtime via dlopen,
-          # you might also need to wrap the executables
-          nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
-            pkgs.makeWrapper
-          ];
-
-          postFixup = (old.postFixup or "") + ''
-            wrapProgram $out/bin/smfc \
-              --prefix LD_LIBRARY_PATH : ${pkgs.lib.makeLibraryPath [ pkgs.systemd ]}
-          '';
-
           passthru = old.passthru // {
             # Put all tests in the passthru.tests attribute set.
             # Nixpkgs also uses the passthru.tests mechanism for ofborg test discovery.
@@ -166,11 +154,19 @@
         default =
           let
             inherit (pkgs.callPackages pyproject-nix.build.util { }) mkApplication;
+            app = mkApplication {
+              venv = pythonSet.mkVirtualEnv "smfc-env" workspace.deps.default;
+              package = pythonSet.smfc;
+            };
           in
-          mkApplication {
-            venv = pythonSet.mkVirtualEnv "smfc-env" workspace.deps.default;
-            package = pythonSet.smfc;
-          };
+          # Wrap the final application to include libudev in LD_LIBRARY_PATH
+          app.overrideAttrs (old: {
+            nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.makeWrapper ];
+            postFixup = (old.postFixup or "") + ''
+              wrapProgram $out/bin/smfc \
+                --prefix LD_LIBRARY_PATH : ${pkgs.lib.makeLibraryPath [ pkgs.systemd ]}
+            '';
+          });
       };
 
       # Make hello runnable with `nix run`
