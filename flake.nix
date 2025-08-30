@@ -327,7 +327,7 @@
             {
               environment.etc."/smfc/smfc.conf".source =
                 let
-                  mkValueString = opts: v: if v == true then "1" else if v == false then "0" else generators.mkValueStringDefault opts v;
+                  mkValueString = v: if v == true then "1" else if v == false then "0" else generators.mkValueStringDefault { } v;
                 in
                 generators.toINI
                   {
