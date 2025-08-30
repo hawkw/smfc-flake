@@ -72,10 +72,21 @@
       # An overlay of build fixups & test additions.m
       pyprojectOverrides = final: prev: {
         smfc = prev.smfc.overrideAttrs (old: {
-          nativeBuildInputs = (old.buildInputs or [ ]) ++ [ pkgs.pkg-config ];
+          # Add runtime dependencies that need to be available
           buildInputs = (old.buildInputs or [ ]) ++ [
-            pkgs.systemd
+            pkgs.systemd # provides libudev
           ];
+
+          # If the Python package needs to find libudev at runtime via dlopen,
+          # you might also need to wrap the executables
+          nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
+            pkgs.makeWrapper
+          ];
+
+          postFixup = (old.postFixup or "") + ''
+            wrapProgram $out/bin/smfc \
+              --prefix LD_LIBRARY_PATH : ${pkgs.lib.makeLibraryPath [ pkgs.systemd ]}
+          '';
 
           passthru = old.passthru // {
             # Put all tests in the passthru.tests attribute set.
