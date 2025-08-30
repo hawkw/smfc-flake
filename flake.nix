@@ -69,15 +69,15 @@
 
       inherit (pkgs) stdenv;
 
+      hacks = builtins.callPackage pyproject-nix.build.hacks { };
+
       # An overlay of build fixups & test additions.m
       pyprojectOverrides = final: prev: {
         smfc = prev.smfc.overrideAttrs (old: {
-          pyudev = prev.pyudev.overrideAttrs (old: {
-            postPatch = (old.postPatch or "") + ''
-              substituteInPlace pyudev/_libudev.py \
-                --replace "find_library('udev')" "'${pkgs.systemd}/lib/libudev.so.1'"
-            '';
-          });
+          pyudev = hacks.nixpkgsPrebuilt {
+            from = pkgs.python312Packages.pyudev;
+            prev = prev.pyudev;
+          };
 
           passthru = old.passthru // {
             # Put all tests in the passthru.tests attribute set.
