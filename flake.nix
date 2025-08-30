@@ -75,7 +75,7 @@
           pyudev = prev.pyudev.overrideAttrs (old: {
             postPatch = (old.postPatch or "") + ''
               substituteInPlace pyudev/_libudev.py \
-                --replace "find_library('udev')" "'${pkgs.systemd.lib}/lib/libudev.so.1'"
+                --replace "find_library('udev')" "'${pkgs.systemd}/lib/libudev.so.1'"
             '';
           });
 
