@@ -72,6 +72,10 @@
       # An overlay of build fixups & test additions.m
       pyprojectOverrides = final: prev: {
         smfc = prev.smfc.overrideAttrs (old: {
+          nativeBuildInputs = (old.buildInputs or [ ]) ++ [ pkgs.pkg-config ];
+          buildInputs = (old.buildInputs or [ ]) ++ [
+            pkgs.systemd
+          ];
 
           passthru = old.passthru // {
             # Put all tests in the passthru.tests attribute set.
