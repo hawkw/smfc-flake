@@ -330,7 +330,7 @@
                   mkValueString = v:
                     if v == true then "1"
                     else if v == false then "0"
-                    else if isList v then builtins.concatStringsSep (map (x: toString x) v) ","
+                    else if isList v then builtins.concatStringsSep "," (map (x: toString x) v)
                     else generators.mkValueStringDefault { } v;
                 in
                 generators.toINI
