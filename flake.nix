@@ -278,6 +278,7 @@
                     temp_calc = 1;
                     steps = 6;
                     polling = 2;
+                    sensitivity = 3.0;
                     min_temp = 30.0;
                     max_temp = 60.0;
                     min_level = 35;
@@ -296,6 +297,7 @@
                       temp_calc = 1;
                       steps = 4;
                       polling = 10;
+                      sensitivity = 2.0;
                       min_temp = 32.0;
                       max_temp = 46.0;
                       min_level = 35;
