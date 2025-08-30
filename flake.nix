@@ -211,7 +211,7 @@
                     description = "Enable fan speed control for this zone";
                   };
                   ipmi_zone = mkOption {
-                    type = types.listOf types.int.positive;
+                    type = types.listOf types.ints.positive;
                     description = "List of IPMI fan zones to control";
                   };
                   temp_calc = mkOption
@@ -221,7 +221,7 @@
                       description = "Temperature calculation mode (0=minimum, 1=average, 2=maximum)";
                     };
                   steps = mkOption {
-                    type = types.int.positive;
+                    type = types.ints.positive;
                     description = "Number of fan speed steps";
                   };
                   sensitivity = mkOption {
@@ -229,7 +229,7 @@
                     description = "Threshold before the fan controller reacts (degrees C)";
                   };
                   polling = mkOption {
-                    type = types.int.positive;
+                    type = types.ints.positive;
                     description = "Temperature polling interval (seconds)";
                   };
                   min_temp = mkOption {
@@ -245,7 +245,7 @@
                     description = "Minimum fan speed level (percentage)";
                   };
                   max_level = mkOption {
-                    type = types.int.positive;
+                    type = types.ints.between [ 0 100 ];
                     description = "Maximum fan speed level (percentage)";
                   };
                 };
@@ -308,7 +308,7 @@
                       options = zoneOptions // {
                         gpu_device_ids = mkOption
                           {
-                            type = types.listOf types.int.positive;
+                            type = types.listOf types.ints.positive;
                             description = "GPU device IDs. These are indices in nvidia-smi temperature report.";
                             default = [ 0 ];
                           };
