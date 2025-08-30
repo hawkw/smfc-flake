@@ -211,7 +211,7 @@
                     description = "Enable fan speed control for this zone";
                   };
                   ipmi_zone = mkOption {
-                    type = types.listOf types.ints.positive;
+                    type = types.listOf types.ints.unsigned;
                     description = "List of IPMI fan zones to control";
                   };
                   temp_calc = mkOption
@@ -308,7 +308,7 @@
                       options = zoneOptions // {
                         gpu_device_ids = mkOption
                           {
-                            type = types.listOf types.ints.positive;
+                            type = types.listOf types.ints.unsigned;
                             description = "GPU device IDs. These are indices in nvidia-smi temperature report.";
                             default = [ 0 ];
                           };
