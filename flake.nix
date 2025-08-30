@@ -327,7 +327,11 @@
             {
               environment.etc."/smfc/smfc.conf".source =
                 let
-                  mkValueString = v: if v == true then "1" else if v == false then "0" else generators.mkValueStringDefault { } v;
+                  mkValueString = v:
+                    if v == true then "1"
+                    else if v == false then "0"
+                    else if isList v then builtins.concatStringsSep (map v toString) ","
+                    else generators.mkValueStringDefault { } v;
                 in
                 generators.toINI
                   {
