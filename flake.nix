@@ -160,13 +160,15 @@
             };
           in
           # Wrap the final application to include libudev in LD_LIBRARY_PATH
-          app.overrideAttrs (old: {
-            nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.makeWrapper ];
-            postFixup = (old.postFixup or "") + ''
+          pkgs.symlinkJoin {
+            name = "smfc-${version}";
+            paths = [ app ];
+            nativeBuildInputs = [ pkgs.makeWrapper ];
+            postBuild = ''
               wrapProgram $out/bin/smfc \
                 --prefix LD_LIBRARY_PATH : ${pkgs.lib.makeLibraryPath [ pkgs.systemd ]}
             '';
-          });
+          };
       };
 
       # Make hello runnable with `nix run`
