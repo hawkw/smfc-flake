@@ -79,7 +79,7 @@
             prev = prev.pyudev;
           };
 
-          propagatedBuildInputs = (prev.propagatedBuildInputs or [ ]) ++ [ pkgs.python312Packages.pyudev ];
+          propagatedBuildInputs = (prev.propagatedBuildInputs or [ ]) ++ [ pkgs.python312Packages.pyudev pkgs.systemd ];
 
           passthru = old.passthru // {
             # Put all tests in the passthru.tests attribute set.
