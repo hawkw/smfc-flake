@@ -241,11 +241,11 @@
                     description = "Maximum temperature for the fan curve (degrees C)";
                   };
                   min_level = mkOption {
-                    type = types.ints.between [ 0 100 ];
+                    type = types.ints.between 0 100;
                     description = "Minimum fan speed level (percentage)";
                   };
                   max_level = mkOption {
-                    type = types.ints.between [ 0 100 ];
+                    type = types.ints.between 0 100;
                     description = "Maximum fan speed level (percentage)";
                   };
                 };
