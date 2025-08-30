@@ -336,7 +336,7 @@
 
           config = mkIf cfg.enable
             {
-              environment.etc."/smfc/smfc.conf".source =
+              environment.etc."/smfc/smfc.conf".text =
                 let
                   mkValueString = v:
                     if v == true then "1"
