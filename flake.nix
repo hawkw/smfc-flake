@@ -69,7 +69,7 @@
 
       inherit (pkgs) stdenv;
 
-      hacks = builtins.callPackage pyproject-nix.build.hacks { };
+      hacks = pkgs.callPackage pyproject-nix.build.hacks { };
 
       # An overlay of build fixups & test additions.m
       pyprojectOverrides = final: prev: {
