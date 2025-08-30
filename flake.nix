@@ -172,7 +172,7 @@
       #
       nixosModules = {
         default = { config, lib, pkgs, ... }: with lib; let cfg = config.services.smfc; in {
-          options = {
+          options.services.smfc = {
             enable = mkEnableOption "supermicro fan control service";
             smartmontools =
               {
